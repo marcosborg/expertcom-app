@@ -7,6 +7,6 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadComponent: () => import('./start/start.page').then( m => m.StartPage)
+    loadComponent: () => import('./auth/start/start.page').then( m => m.StartPage)
   },
 ];

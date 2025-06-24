@@ -28,6 +28,7 @@
     "@capacitor/core": "latest",
     "@capacitor/haptics": "latest",
     "@capacitor/keyboard": "latest",
+    "@capacitor/preferences": "^7.0.1",
     "@capacitor/status-bar": "latest",
     "@ionic/angular": "^8.0.0",
     "ionicons": "^7.0.0",
