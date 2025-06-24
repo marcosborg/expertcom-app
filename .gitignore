@@ -1,0 +1,8 @@
+.vscode
+android
+ios
+.angular
+node_modules
+www
+resources/android/**/*
+resources/ios/**/*
