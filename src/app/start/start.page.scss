@@ -1,0 +1,11 @@
+ion-content::part(scroll) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.start-logo {
+  width: 50vw;
+  height: auto;
+}
+

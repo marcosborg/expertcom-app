@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'ionic.expertcom',
-  appName: 'expertcom',
+  appId: 'pt.expertcom.driver',
+  appName: 'Expertcom',
   webDir: 'www'
 };
 
