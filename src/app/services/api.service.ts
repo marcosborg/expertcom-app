@@ -7,7 +7,7 @@ import { LoadingController } from '@ionic/angular';
 })
 export class ApiService {
 
-  sandbox: boolean = true;
+  sandbox: boolean = false;
   baseUrl: string;
 
   constructor(
@@ -31,14 +31,16 @@ export class ApiService {
 
   //PRIVATE
 
-  user(data: any) {
+  panel(data: any) {
     this.httpOptions = {
       headers: new HttpHeaders({
         'Accept-Language': 'pt',
         'Authorization': 'Bearer ' + data.access_token
       })
     };
-    return this.http.get(this.baseUrl + 'app/user', this.httpOptions);
+    return this.http.post(this.baseUrl + 'v1/panel', data, this.httpOptions);
   }
+
+  panelCache: any = {};
 
 }

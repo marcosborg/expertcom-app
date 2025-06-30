@@ -1,0 +1,23 @@
+ion-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+ion-card-title {
+  font-size: 1.1rem;
+}
+
+ion-item {
+  --border-radius: 12px;
+}
+
+.credit {
+  color: #28a745; /* verde bootstrap */
+  font-weight: 600;
+}
+
+.debit {
+  color: #dc3545; /* vermelho bootstrap */
+  font-weight: 600;
+}
