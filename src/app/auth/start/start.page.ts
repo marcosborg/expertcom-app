@@ -26,7 +26,6 @@ export class StartPage {
     setTimeout(() => {
       this.preferences.checkName('access_token').then((resp: any) => {
         this.access_token = resp.value;
-        console.log(this.access_token);
         if (this.access_token) {
           this.router.navigateByUrl('tabs/tab1');
         } else {

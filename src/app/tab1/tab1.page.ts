@@ -20,6 +20,8 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonInput,
+  IonButton,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -42,6 +44,8 @@ import {
     IonGrid,
     IonRow,
     IonCol,
+    IonInput,
+    IonButton,
   ]
 })
 export class Tab1Page {
@@ -80,6 +84,9 @@ export class Tab1Page {
   total_earnings_after_vat: number = 0;
   adjustments: any[] = [];
   total_after_vat: number = 0;
+  final_total: number = 0;
+  balance: number = 0;
+  value: any;
 
   ionViewWillEnter() {
     this.preferences.checkName('access_token').then((resp: any) => {
@@ -91,11 +98,9 @@ export class Tab1Page {
           loading.present();
           const data = { access_token: this.access_token };
           this.api.panel(data).subscribe((resp: any) => {
+            console.log(resp);
             loading.dismiss();
             this.api.panelCache = resp;
-
-            console.log(this.api.panelCache);
-
             this.total_earnings_uber = resp.total_earnings_uber;
             this.contract_type_rank = resp.contract_type_rank;
             this.total_uber = resp.total_uber;
@@ -111,6 +116,8 @@ export class Tab1Page {
             this.total_earnings_after_vat = resp.total_earnings_after_vat;
             this.adjustments = resp.adjustments;
             this.total_after_vat = resp.total_after_vat;
+            this.final_total = resp.final_total;
+            this.balance = resp.driver_balance ? resp.driver_balance.balance : 0;
 
             // Preencher anos
             this.tvde_years = resp.tvde_years;
@@ -158,7 +165,6 @@ export class Tab1Page {
       }
       this.api.panel(data).subscribe((resp: any) => {
         loading.dismiss();
-        console.log(resp);
         this.api.panelCache = resp;
         // Filtrar meses para o ano selecionado
         this.tvde_months = resp.tvde_months.filter((m: any) => m.year_id === this.tvde_year_id);

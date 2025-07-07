@@ -7,7 +7,7 @@ import { LoadingController } from '@ionic/angular';
 })
 export class ApiService {
 
-  sandbox: boolean = false;
+  sandbox: boolean = true;
   baseUrl: string;
 
   constructor(
@@ -42,5 +42,15 @@ export class ApiService {
   }
 
   panelCache: any = {};
+
+  receipts(data: any) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Accept-Language': 'pt',
+        'Authorization': 'Bearer ' + data.access_token
+      })
+    };
+    return this.http.post(this.baseUrl + 'v1/receipts', data, this.httpOptions);
+  }
 
 }

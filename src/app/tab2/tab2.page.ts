@@ -1,5 +1,16 @@
 import { Component } from '@angular/core';
-import { IonContent } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonList,
+  IonItem,
+} from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +29,15 @@ import { FunctionsService } from '../services/functions.service';
     CommonModule,
     FormsModule,
     IonContent,
+    IonSegment,
+    IonSegmentButton,
+    IonLabel,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonList,
+    IonItem,
   ]
 })
 export class Tab2Page {
@@ -30,6 +50,9 @@ export class Tab2Page {
   ) { }
 
   access_token: any;
+  status: string = 'unpaid';
+  paid: any = [];
+  unpaid: any = [];
 
   ionViewWillEnter() {
     this.preferences.checkName('access_token').then((resp: any) => {
@@ -37,9 +60,26 @@ export class Tab2Page {
       if (!this.access_token) {
         this.router.navigateByUrl('/');
       } else {
-        
+        this.loadingController.create().then((loading) => {
+          loading.present();
+          let data = {
+            access_token: this.access_token
+          }
+          this.api.receipts(data).subscribe((resp: any) => {
+            loading.dismiss();
+            this.paid = resp.paid;
+            this.unpaid = resp.unpaid;
+          }, (err) => {
+            this.functions.errors(err);
+          });
+        });
       }
     });
+  }
+
+  getReceipt(p: any) {
+    let url = p.file.original_url ?? '#';
+    window.location.href = url;
   }
 
 }
