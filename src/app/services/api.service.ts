@@ -7,7 +7,7 @@ import { LoadingController } from '@ionic/angular';
 })
 export class ApiService {
 
-  sandbox: boolean = true;
+  sandbox: boolean = false;
   baseUrl: string;
 
   constructor(
