@@ -91,7 +91,7 @@ export class Tab1Page {
           loading.present();
           const data = { access_token: this.access_token };
           this.api.panel(data).subscribe((resp: any) => {
-            loading.dismiss()
+            loading.dismiss();
             this.api.panelCache = resp;
 
             console.log(this.api.panelCache);
@@ -112,7 +112,6 @@ export class Tab1Page {
             this.adjustments = resp.adjustments;
             this.total_after_vat = resp.total_after_vat;
 
-
             // Preencher anos
             this.tvde_years = resp.tvde_years;
 
@@ -124,9 +123,9 @@ export class Tab1Page {
             // Filtrar meses para o ano selecionado
             this.tvde_months = resp.tvde_months.filter((m: any) => m.year_id === this.tvde_year_id);
 
-            // Selecionar mês corrente ou primeiro do ano
-            const currentMonth = new Date().getMonth() + 1;
-            const foundMonth = this.tvde_months.find((m: any) => m.number === currentMonth);
+            // Selecionar mês com base no tvde_month_id do payload
+            const payloadMonthId = resp.tvde_month_id;
+            const foundMonth = this.tvde_months.find((m: any) => m.id === payloadMonthId);
             this.tvde_month_id = foundMonth ? foundMonth.id : (this.tvde_months[0]?.id || null);
 
             // Filtrar semanas para o mês selecionado
@@ -148,6 +147,7 @@ export class Tab1Page {
       }
     });
   }
+
 
   changeYear() {
     this.loadingController.create().then((loading) => {
