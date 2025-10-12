@@ -1,0 +1,141 @@
+<app-header></app-header>
+
+<ion-content>
+
+    <div class="ion-padding">
+        <!-- Ano -->
+        <ion-item *ngIf="tvde_years && tvde_years.length" class="ion-margin-bottom">
+            <ion-label>Ano</ion-label>
+            <ion-select placeholder="Selecione o Ano" interface="popover" [(ngModel)]="tvde_year_id"
+                (ionChange)="changeYear()">
+                <ion-select-option *ngFor="let year of tvde_years" [value]="year.id">
+                    {{ year.name }}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <!-- Mês -->
+        <ion-item *ngIf="tvde_months && tvde_months.length && tvde_year_id" class="ion-margin-bottom">
+            <ion-label>Mês</ion-label>
+            <ion-select placeholder="Selecione o Mês" interface="popover" [(ngModel)]="tvde_month_id"
+                (ionChange)="changeMonth()">
+                <ion-select-option *ngFor="let month of tvde_months" [value]="month.id">
+                    {{ month.name }}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <!-- Semana -->
+        <ion-item *ngIf="tvde_weeks && tvde_weeks.length && tvde_month_id">
+            <ion-label>Semana</ion-label>
+            <ion-select placeholder="Selecione a Semana" interface="popover" [(ngModel)]="tvde_week_id"
+                (ionChange)="changeWeek()">
+                <ion-select-option *ngFor="let week of tvde_weeks" [value]="week.id">
+                    Semana de {{ formatWeek(week.start_date, week.end_date) }}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+    </div>
+
+    <ion-card *ngIf="tvde_weeks && tvde_weeks.length && tvde_month_id">
+        <ion-card-header>
+            <ion-card-title>Atividades por operador</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-grid>
+                <ion-row class="ion-text-bold">
+                    <ion-col>Operador</ion-col>
+                    <ion-col class="ion-text-end">Bruto</ion-col>
+                    <ion-col class="ion-text-end">%</ion-col>
+                    <ion-col class="ion-text-end">Líquido</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>UBER</ion-col>
+                    <ion-col class="ion-text-end">{{ total_earnings_uber }}€</ion-col>
+                    <ion-col class="ion-text-end">{{ contract_type_rank?.percent }}%</ion-col>
+                    <ion-col class="ion-text-end">{{ total_uber }}€</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>BOLT</ion-col>
+                    <ion-col class="ion-text-end">{{ total_earnings_bolt }}€</ion-col>
+                    <ion-col class="ion-text-end">{{ contract_type_rank?.percent }}%</ion-col>
+                    <ion-col class="ion-text-end">{{ total_bolt }}€</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Gorjeta UBER</ion-col>
+                    <ion-col class="ion-text-end">{{ total_tips_uber }}€</ion-col>
+                    <ion-col class="ion-text-end">{{ uber_tip_percent }}%</ion-col>
+                    <ion-col class="ion-text-end">{{ uber_tip_after_vat }}€</ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col>Gorjeta BOLT</ion-col>
+                    <ion-col class="ion-text-end">{{ total_tips_bolt }}€</ion-col>
+                    <ion-col class="ion-text-end">{{ bolt_tip_percent }}%</ion-col>
+                    <ion-col class="ion-text-end">{{ bolt_tip_after_vat }}€</ion-col>
+                </ion-row>
+
+                <ion-row class="ion-text-bold">
+                    <ion-col>Totais</ion-col>
+                    <ion-col class="ion-text-end">{{ total_earnings | number:'1.2-2' }}€</ion-col>
+                    <ion-col class="ion-text-end"></ion-col>
+                    <ion-col class="ion-text-end">{{ total_after_vat | number:'1.2-2' }}€</ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+
+    <!-- Ajustes -->
+    <ion-card *ngIf="tvde_weeks && tvde_weeks.length && tvde_month_id">
+        <ion-card-header>
+            <ion-card-title>Ajustes</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-grid>
+                <ion-row class="ion-text-bold">
+                    <ion-col class="ion-text-start">Descrição</ion-col>
+                    <ion-col class="ion-text-end">Créditos</ion-col>
+                    <ion-col class="ion-text-end">Débitos</ion-col>
+                </ion-row>
+
+                <ion-row *ngFor="let adj of adjustments">
+                    <ion-col class="ion-text-start">{{ adj.name }}</ion-col>
+                    <ion-col class="ion-text-end" [ngClass]="{'credit': adj.type === 'refund'}">
+                        <ng-container *ngIf="adj.type === 'refund'" class="ion-text-end">{{ adj.amount | number:'1.2-2'
+                            }}€</ng-container>
+                    </ion-col>
+                    <ion-col class="ion-text-end" [ngClass]="{'debit': adj.type === 'deduct'}">
+                        <ng-container *ngIf="adj.type === 'deduct'" class="ion-text-end">-{{ adj.amount | number:'1.2-2'
+                            }}€</ng-container>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="tvde_weeks && tvde_weeks.length && tvde_month_id">
+        <ion-card-header>
+            <ion-card-title>Recibo</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <ion-label>
+                    Valor da semana:
+                </ion-label>
+                {{ final_total | number:'1.2-2' }}€
+            </ion-item>
+            <ion-item>
+                <ion-label>
+                    Saldo:
+                </ion-label>
+                {{ balance | number:'1.2-2' }}€
+            </ion-item>
+            <ion-input labelPlacement="stacked" type="number" label="Valor do recibo" [(ngModel)]="value" placeholder="Verifique o seu recibo para confirmar o valor"></ion-input>
+            <ion-button >Escolher recibo</ion-button>
+        </ion-card-content>
+    </ion-card>
+
+</ion-content>

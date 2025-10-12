@@ -1,0 +1,62 @@
+.card {
+  margin: 16px;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--ion-color-light);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.row {
+  display: flex; align-items: center; gap: 12px;
+  &.between { justify-content: space-between; }
+}
+
+.title { font-size: 18px; font-weight: 700; }
+.subtitle { font-size: 13px; color: var(--ion-color-medium); }
+
+.status-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--ion-color-medium);
+  &.running { background: var(--ion-color-success); box-shadow: 0 0 0 6px rgba(52,199,89,0.12); }
+  &.paused { background: var(--ion-color-warning); box-shadow: 0 0 0 6px rgba(255,204,0,0.12); }
+}
+
+.timers {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 6px;
+  .timer {
+    background: white; border-radius: 12px; padding: 12px;
+    .label { font-size: 12px; color: var(--ion-color-medium); }
+    .value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+  }
+}
+
+.actions {
+  display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;
+  .btn {
+    padding: 12px 16px; border-radius: 10px; font-weight: 600; border: 0;
+    &.primary { background: var(--ion-color-primary); color: white; }
+    &.warn { background: var(--ion-color-warning); color: black; }
+    &.light { background: var(--ion-color-medium-tint); color: white; }
+  }
+}
+
+.date-nav {
+  display: flex; align-items: center; gap: 8px;
+  .mini {
+    border: 0; background: var(--ion-color-light-shade); padding: 6px 8px; border-radius: 8px;
+  }
+}
+
+.totals { display: flex; gap: 16px; margin: 10px 0; font-size: 14px; }
+
+.log-item {
+  display: grid; grid-template-columns: 110px 1fr auto; gap: 8px; align-items: center;
+  background: white; border-radius: 10px; padding: 10px 12px; margin-top: 8px;
+  .kind { font-weight: 700; }
+  .time { font-size: 13px; color: var(--ion-color-medium); }
+  .dur { font-weight: 700; }
+  &.drive { border-left: 4px solid var(--ion-color-success); }
+  &.pause { border-left: 4px solid var(--ion-color-warning); }
+}
+
+.muted { color: var(--ion-color-medium); margin-top: 8px; }

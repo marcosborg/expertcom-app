@@ -1,0 +1,69 @@
+<app-header></app-header>
+
+<ion-content>
+
+  <!-- Cartão Cronómetro -->
+  <div class="card">
+    <div class="row between">
+      <div>
+        <div class="title">Registo de Condução</div>
+        <div class="subtitle" *ngIf="status === 'idle'">Nenhuma sessão ativa</div>
+        <div class="subtitle" *ngIf="status === 'running'">A conduzir</div>
+        <div class="subtitle" *ngIf="status === 'paused'">Em pausa</div>
+      </div>
+      <div class="status-dot" [class.running]="status==='running'" [class.paused]="status==='paused'"></div>
+    </div>
+
+    <div class="timers">
+      <div class="timer">
+        <div class="label">Condução</div>
+        <div class="value">{{ fmtDuration(elapsedDriveSeconds) }}</div>
+      </div>
+      <div class="timer">
+        <div class="label">Pausas</div>
+        <div class="value">{{ fmtDuration(elapsedPauseSeconds) }}</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" *ngIf="status==='idle'" (click)="start()">Iniciar</button>
+
+      <ng-container *ngIf="status!=='idle'">
+        <button class="btn warn" (click)="pauseOrResume()">
+          {{ status==='running' ? 'Pausar' : 'Retomar' }}
+        </button>
+        <button class="btn light" (click)="finish()">Terminar</button>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Registos Diários (Autoridade) -->
+  <div class="card">
+    <div class="row between">
+      <div class="title">Registo diário</div>
+      <div class="date-nav">
+        <button class="mini" (click)="changeDate(-1)">◀</button>
+        <span>{{ selectedDate }}</span>
+        <button class="mini" (click)="changeDate(1)">▶</button>
+      </div>
+    </div>
+
+    <div class="totals">
+      <div>Total condução: <b>{{ fmtDuration(dailyDrive) }}</b></div>
+      <div>Total pausas: <b>{{ fmtDuration(dailyPause) }}</b></div>
+    </div>
+
+    <div *ngIf="loadingLogs" class="muted">A carregar registos…</div>
+
+    <div *ngIf="!loadingLogs && (!logs || logs.length===0)" class="muted">
+      Sem registos para este dia.
+    </div>
+
+    <div *ngFor="let seg of logs" class="log-item" [class.drive]="seg.kind==='drive'" [class.pause]="seg.kind==='pause'">
+      <div class="kind">{{ seg.kind === 'drive' ? 'Condução' : 'Pausa' }}</div>
+      <div class="time">{{ seg.started_at }} → {{ seg.ended_at }}</div>
+      <div class="dur">{{ fmtDuration(seg.duration_seconds) }}</div>
+    </div>
+  </div>
+
+</ion-content>

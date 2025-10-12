@@ -1,0 +1,45 @@
+<app-header></app-header>
+
+<ion-content>
+
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Recibos</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-segment [(ngModel)]="status">
+                <ion-segment-button value="unpaid">
+                    <ion-label>Não pagos</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="paid">
+                    <ion-label>Pagos</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-content>
+            <ion-list *ngIf="status == 'unpaid'">
+                <ion-item *ngFor="let p of unpaid" (click)="getReceipt(p)" button>
+                    <ion-label>
+                        <p><strong>Valor da semana: </strong>{{ p.value ?? 0 }}€</p>
+                        <p><strong>Saldo: </strong>{{ p.balance ?? 0 }}€</p>
+                        <p><strong>Transferido: </strong>{{ p.amount_transferred ?? 0 }}€</p>
+                        <p>{{ p.updated_at }}</p>
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+            <ion-list *ngIf="status == 'paid'">
+                <ion-item *ngFor="let p of paid" (click)="getReceipt(p)" button>
+                    <ion-label>
+                        <p><strong>Valor da semana: </strong>{{ p.value ?? 0 }}€</p>
+                        <p><strong>Saldo: </strong>{{ p.balance ?? 0 }}€</p>
+                        <p><strong>Transferido: </strong>{{ p.amount_transferred ?? 0 }}€</p>
+                        <p>{{ p.updated_at }}</p>
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+
+</ion-content>

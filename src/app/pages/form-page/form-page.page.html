@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ meta.name || 'Formulário' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!loading && meta; else loadingTpl">
+  <form [formGroup]="fg" (ngSubmit)="submit()">
+    <ion-list>
+
+      <ion-item *ngIf="meta.has_driver">
+        <ion-label position="stacked">Motorista *</ion-label>
+        <ion-select formControlName="driver_id" interface="popover" placeholder="Selecionar">
+          <ion-select-option *ngFor="let d of drivers" [value]="d.id">{{ d.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="meta.has_license">
+        <ion-label position="stacked">Matrícula *</ion-label>
+        <ion-select formControlName="vehicle_item_id" interface="popover" placeholder="Selecionar">
+          <ion-select-option *ngFor="let v of vehicle_items" [value]="v.id">{{ v.license_plate }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="meta.has_technician">
+        <ion-label position="stacked">Técnico *</ion-label>
+        <ion-select formControlName="user_id" interface="popover" placeholder="Selecionar">
+          <ion-select-option *ngFor="let u of technicians" [value]="u.id">{{ u.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ng-container *ngFor="let fi of meta.form_inputs">
+        <ng-container [ngSwitch]="fi.type">
+
+          <ion-item *ngSwitchCase="'text'">
+            <ion-label position="stacked">{{ fi.label }} <span *ngIf="fi.required">*</span></ion-label>
+            <ion-input [formControlName]="key(fi)"></ion-input>
+          </ion-item>
+
+          <ion-item *ngSwitchCase="'number'">
+            <ion-label position="stacked">{{ fi.label }} <span *ngIf="fi.required">*</span></ion-label>
+            <ion-input type="number" [formControlName]="key(fi)"></ion-input>
+          </ion-item>
+
+          <ion-item *ngSwitchCase="'date'">
+            <ion-label position="stacked">{{ fi.label }} <span *ngIf="fi.required">*</span></ion-label>
+            <ion-datetime presentation="date" [formControlName]="key(fi)"></ion-datetime>
+          </ion-item>
+
+          <ion-item *ngSwitchCase="'textarea'">
+            <ion-label position="stacked">{{ fi.label }} <span *ngIf="fi.required">*</span></ion-label>
+            <ion-textarea autoGrow="true" [formControlName]="key(fi)"></ion-textarea>
+          </ion-item>
+
+          <ion-item lines="none" *ngSwitchCase="'checkbox'">
+            <ion-checkbox slot="start" [formControlName]="key(fi)"></ion-checkbox>
+            <ion-label>{{ fi.label }} <span *ngIf="fi.required">*</span></ion-label>
+          </ion-item>
+
+          <ion-item *ngSwitchCase="'radio'">
+            <ion-label>{{ fi.label }}</ion-label>
+            <ion-radio-group [formControlName]="key(fi)">
+              <ion-item><ion-label>Sim</ion-label><ion-radio value="Sim"></ion-radio></ion-item>
+              <ion-item><ion-label>Não</ion-label><ion-radio value="Não"></ion-radio></ion-item>
+            </ion-radio-group>
+          </ion-item>
+
+          <ion-item *ngSwitchCase="'photos'">
+            <ion-label position="stacked">{{ fi.label }}</ion-label>
+            <input type="file" multiple (change)="onPickPhotos(fi, $event.target.files)">
+            <ion-note *ngIf="photos[fi.id]?.length" class="ion-padding-top">
+              {{ photos[fi.id].length }} ficheiro(s) carregado(s)
+            </ion-note>
+            <div class="ion-padding-top" *ngIf="uploading[fi.id]">
+              <ion-spinner name="dots"></ion-spinner> a carregar fotos…
+            </div>
+          </ion-item>
+
+        </ng-container>
+      </ng-container>
+    </ion-list>
+
+    <div class="ion-padding">
+      <ion-button expand="block" type="submit" [disabled]="submitting || hasAnyUploading">
+        {{ submitting ? 'A enviar…' : 'Submeter' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
+
+<ng-template #loadingTpl>
+  <ion-content>
+    <ion-list>
+      <ion-item *ngFor="let s of [1,2,3,4]">
+        <ion-label>
+          <h2><span class="skeleton"></span></h2>
+          <p><span class="skeleton"></span></p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ng-template>

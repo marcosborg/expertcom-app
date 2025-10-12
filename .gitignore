@@ -1,0 +1,7 @@
+/www
+/node_modules
+.vscode/*
+/.angular
+/.angular/cache
+ios
+android

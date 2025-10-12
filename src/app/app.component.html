@@ -1,0 +1,21 @@
+<ion-app id="main-content">
+  <ion-router-outlet></ion-router-outlet>
+</ion-app>
+
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Expertcom</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-menu-toggle auto-hide="true">
+        <ion-item routerLink="/tabs" routerDirection="root" detail="false">Início</ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle auto-hide="true">
+        <ion-item href="https://expertcom.pt" target="_blank" rel="noopener noreferrer" detail="false">Website</ion-item>
+      </ion-menu-toggle>
+    </ion-list>
+  </ion-content>
+</ion-menu>

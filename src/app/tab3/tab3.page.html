@@ -1,0 +1,29 @@
+<app-header></app-header>
+
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-list *ngIf="!loading && forms.length; else loadingOrEmpty">
+        <ion-item button detail *ngFor="let f of forms; trackBy: trackById" (click)="openForm(f)">
+            <ion-label>
+                <h2>{{ f.name }}</h2>
+                <p *ngIf="f.description" [innerHTML]="f.description"></p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+
+    <ng-template #loadingOrEmpty>
+        <ion-list *ngIf="loading">
+            <ion-item *ngFor="let s of [1,2,3,4,5]">
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </ion-item>
+        </ion-list>
+
+        <div class="ion-padding" *ngIf="!loading && !forms.length">
+            <p *ngIf="!error">Não há formulários disponíveis.</p>
+            <p *ngIf="error">{{ error }}</p>
+        </div>
+    </ng-template>
+</ion-content>
