@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ApiService, DrvSessionDTO, DrvSegmentDTO } from '../services/api.service';
 import { PreferencesService } from '../services/preferences.service';
@@ -18,7 +18,7 @@ import type { PluginListenerHandle } from '@capacitor/core';
   templateUrl: 'tab4.page.html',
   styleUrls: ['tab4.page.scss'],
   standalone: true,
-  imports: [HeaderComponent, CommonModule, FormsModule, IonContent],
+  imports: [HeaderComponent, FormsModule, IonContent],
 })
 export class Tab4Page implements OnDestroy {
   constructor(

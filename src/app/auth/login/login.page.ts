@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
@@ -32,7 +32,6 @@ import { FunctionsService } from 'src/app/services/functions.service';
   standalone: true,
   imports: [
     IonContent,
-    CommonModule,
     FormsModule,
     IonCard,
     IonCardHeader,
@@ -46,8 +45,8 @@ import { FunctionsService } from 'src/app/services/functions.service';
     IonButton,
     IonFooter,
     IonToolbar,
-    IonInputPasswordToggle,
-  ]
+    IonInputPasswordToggle
+]
 })
 export class LoginPage implements OnInit {
 

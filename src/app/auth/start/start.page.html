@@ -28,16 +28,16 @@
   </section>
 
   <div class="content">
-    <ion-card class="about-card" *ngIf="homeData?.about; else aboutSkeleton">
-      <ion-card-header>
-        <ion-card-title>{{ homeData?.about?.title || homeData?.about?.name || 'Sobre a Expertcom' }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p [innerHTML]="homeData?.about?.description || homeData?.about?.body || homeData?.about?.content"></p>
-      </ion-card-content>
-    </ion-card>
-
-    <ng-template #aboutSkeleton>
+    @if (homeData?.about) {
+      <ion-card class="about-card">
+        <ion-card-header>
+          <ion-card-title>{{ homeData?.about?.title || homeData?.about?.name || 'Sobre a Expertcom' }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p [innerHTML]="homeData?.about?.description || homeData?.about?.body || homeData?.about?.content"></p>
+        </ion-card-content>
+      </ion-card>
+    } @else {
       <ion-card class="about-card">
         <ion-card-header>
           <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
@@ -48,63 +48,78 @@
           <ion-skeleton-text animated style="width: 80%; height: 10px"></ion-skeleton-text>
         </ion-card-content>
       </ion-card>
-    </ng-template>
+    }
 
-    <section class="grid-section" *ngIf="homeData?.activities?.length">
-      <div class="section-title">
-        <h2>Atividades</h2>
-        <p>O que fazemos no dia a dia</p>
+
+    @if (homeData?.activities?.length) {
+      <section class="grid-section">
+        <div class="section-title">
+          <h2>Atividades</h2>
+          <p>O que fazemos no dia a dia</p>
+        </div>
+        <ion-grid>
+          <ion-row>
+            @for (activity of homeData?.activities; track trackByIndex($index, activity)) {
+              <ion-col size="12" sizeMd="6">
+                <ion-card class="info-card">
+                  <ion-card-header>
+                    <ion-card-title>{{ itemTitle(activity) }}</ion-card-title>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <div [innerHTML]="itemDescription(activity)"></div>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            }
+          </ion-row>
+        </ion-grid>
+      </section>
+    }
+
+    @if (faqQuestions().length) {
+      <section class="faq">
+        <div class="section-title">
+          <h2>{{ faqTitle() }}</h2>
+          <p>Questões rápidas sobre serviços, stand e transfers</p>
+        </div>
+        <ion-accordion-group [multiple]="true">
+          @for (faq of faqQuestions(); track trackByIndex($index, faq)) {
+            <ion-accordion>
+              <ion-item slot="header" color="light">
+                <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+                <ion-label>{{ faq.question || faq.title || 'FAQ' }}</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                <p [innerHTML]="faq.answer || faq.content || ''"></p>
+              </div>
+            </ion-accordion>
+          }
+        </ion-accordion-group>
+      </section>
+    }
+
+    @if (cmsMenu.length) {
+      <section class="cms-menu">
+        <div class="section-title">
+          <h2>Páginas</h2>
+          <p>Conteúdo institucional gerido em CMS</p>
+        </div>
+        <ion-list>
+          @for (page of cmsMenu; track page) {
+            <ion-item button detail="true" (click)="openCmsPage(page.id)">
+              <ion-label>{{ page.label }}</ion-label>
+            </ion-item>
+          }
+        </ion-list>
+      </section>
+    }
+
+    @if (homeError && !loadingHome) {
+      <div class="error-block">
+        <p>{{ homeError }}</p>
+        <ion-button size="small" fill="outline" (click)="loadHome(true)">Tentar novamente</ion-button>
       </div>
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12" sizeMd="6" *ngFor="let activity of homeData?.activities; trackBy: trackByIndex">
-            <ion-card class="info-card">
-              <ion-card-header>
-                <ion-card-title>{{ itemTitle(activity) }}</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <div [innerHTML]="itemDescription(activity)"></div>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </section>
-
-    <section class="faq" *ngIf="faqQuestions().length">
-      <div class="section-title">
-        <h2>{{ faqTitle() }}</h2>
-        <p>Questões rápidas sobre serviços, stand e transfers</p>
-      </div>
-      <ion-accordion-group [multiple]="true">
-        <ion-accordion *ngFor="let faq of faqQuestions(); trackBy: trackByIndex">
-          <ion-item slot="header" color="light">
-            <ion-icon name="help-circle-outline" slot="start"></ion-icon>
-            <ion-label>{{ faq.question || faq.title || 'FAQ' }}</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">
-            <p [innerHTML]="faq.answer || faq.content || ''"></p>
-          </div>
-        </ion-accordion>
-      </ion-accordion-group>
-    </section>
-
-    <section class="cms-menu" *ngIf="cmsMenu.length">
-      <div class="section-title">
-        <h2>Páginas</h2>
-        <p>Conteúdo institucional gerido em CMS</p>
-      </div>
-      <ion-list>
-        <ion-item button detail="true" *ngFor="let page of cmsMenu" (click)="openCmsPage(page.id)">
-          <ion-label>{{ page.label }}</ion-label>
-        </ion-item>
-      </ion-list>
-    </section>
-
-    <div class="error-block" *ngIf="homeError && !loadingHome">
-      <p>{{ homeError }}</p>
-      <ion-button size="small" fill="outline" (click)="loadHome(true)">Tentar novamente</ion-button>
-    </div>
+    }
   </div>
 </ion-content>
 ent>

@@ -14,7 +14,7 @@ import {
   IonList,
   IonItem,
 } from '@ionic/angular/standalone';
-import { CommonModule } from '@angular/common';
+
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -32,9 +32,8 @@ import { environment } from 'src/environments/environment';
     IonTitle,
     IonMenuToggle,
     IonList,
-    IonItem,
-    CommonModule
-  ]
+    IonItem
+]
 })
 export class AppComponent {
 

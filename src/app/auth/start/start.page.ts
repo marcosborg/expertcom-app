@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import {
   IonAccordion,
   IonAccordionGroup,
@@ -34,7 +34,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./start.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     PublicHeaderComponent,
     IonContent,
     IonRefresher,
@@ -53,8 +52,8 @@ import { environment } from 'src/environments/environment';
     IonIcon,
     IonSkeletonText,
     IonAccordionGroup,
-    IonAccordion,
-  ]
+    IonAccordion
+]
 })
 export class StartPage implements OnInit {
   homeData?: PublicHomeResponse;

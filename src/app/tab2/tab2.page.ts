@@ -12,7 +12,7 @@ import {
   IonItem,
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { PreferencesService } from '../services/preferences.service';
@@ -26,7 +26,6 @@ import { FunctionsService } from '../services/functions.service';
   styleUrls: ['tab2.page.scss'],
   imports: [
     HeaderComponent,
-    CommonModule,
     FormsModule,
     IonContent,
     IonSegment,
@@ -37,8 +36,8 @@ import { FunctionsService } from '../services/functions.service';
     IonCardTitle,
     IonCardContent,
     IonList,
-    IonItem,
-  ]
+    IonItem
+]
 })
 export class Tab2Page {
   constructor(

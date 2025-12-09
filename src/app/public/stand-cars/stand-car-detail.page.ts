@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonButton,
@@ -24,7 +24,6 @@ import { PublicHeaderComponent } from 'src/app/components/public-header/public-h
   styleUrls: ['./stand-car-detail.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     PublicHeaderComponent,
     IonContent,
     IonRefresher,
@@ -35,8 +34,8 @@ import { PublicHeaderComponent } from 'src/app/components/public-header/public-h
     IonList,
     IonItem,
     IonLabel,
-    IonSkeletonText,
-  ]
+    IonSkeletonText
+]
 })
 export class StandCarDetailPage implements OnInit {
   car?: StandCar;

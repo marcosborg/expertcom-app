@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { PreferencesService } from '../services/preferences.service';
@@ -15,10 +15,9 @@ import { FunctionsService } from '../services/functions.service';
   styleUrls: ['tab5.page.scss'],
   imports: [
     HeaderComponent,
-    CommonModule,
     FormsModule,
-    IonContent,
-  ]
+    IonContent
+]
 })
 export class Tab5Page {
   constructor(

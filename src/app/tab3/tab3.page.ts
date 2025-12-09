@@ -9,7 +9,7 @@ import {
   IonRefresherContent,
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from '../components/header/header.component';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ApiService, FormName } from '../services/api.service';
 import { PreferencesService } from '../services/preferences.service';
@@ -23,7 +23,6 @@ import { FunctionsService } from '../services/functions.service';
   styleUrls: ['tab3.page.scss'],
   imports: [
     HeaderComponent,
-    CommonModule,
     FormsModule,
     IonContent,
     IonList,
@@ -31,8 +30,8 @@ import { FunctionsService } from '../services/functions.service';
     IonLabel,
     IonSkeletonText,
     IonRefresher,
-    IonRefresherContent,
-  ]
+    IonRefresherContent
+]
 })
 export class Tab3Page {
   access_token!: string;

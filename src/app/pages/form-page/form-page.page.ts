@@ -4,7 +4,7 @@ import {
   IonSelect, IonSelectOption, IonCheckbox, IonRadioGroup, IonRadio,
   IonButton, IonDatetime, IonNote, IonSpinner, IonHeader, IonToolbar, IonTitle
 } from '@ionic/angular/standalone';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService, FormName, FormInput } from 'src/app/services/api.service';
@@ -16,12 +16,26 @@ import { PreferencesService } from 'src/app/services/preferences.service';
   styleUrls: ['./form-page.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, ReactiveFormsModule,
-    IonHeader, IonToolbar, IonTitle,
-    IonContent, IonList, IonItem, IonLabel, IonInput, IonTextarea,
-    IonSelect, IonSelectOption, IonCheckbox, IonRadioGroup, IonRadio,
-    IonButton, IonDatetime, IonNote, IonSpinner
-  ]
+    ReactiveFormsModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonInput,
+    IonTextarea,
+    IonSelect,
+    IonSelectOption,
+    IonCheckbox,
+    IonRadioGroup,
+    IonRadio,
+    IonButton,
+    IonDatetime,
+    IonNote,
+    IonSpinner
+]
 })
 export class FormPagePage {
   // Mantemos sempre string para evitar TS2322

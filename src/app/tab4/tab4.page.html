@@ -7,9 +7,15 @@
     <div class="row between">
       <div>
         <div class="title">Registo de Condução</div>
-        <div class="subtitle" *ngIf="status === 'idle'">Nenhuma sessão ativa</div>
-        <div class="subtitle" *ngIf="status === 'running'">A conduzir</div>
-        <div class="subtitle" *ngIf="status === 'paused'">Em pausa</div>
+        @if (status === 'idle') {
+          <div class="subtitle">Nenhuma sessão ativa</div>
+        }
+        @if (status === 'running') {
+          <div class="subtitle">A conduzir</div>
+        }
+        @if (status === 'paused') {
+          <div class="subtitle">Em pausa</div>
+        }
       </div>
       <div class="status-dot" [class.running]="status==='running'" [class.paused]="status==='paused'"></div>
     </div>
@@ -26,14 +32,16 @@
     </div>
 
     <div class="actions">
-      <button class="btn primary" *ngIf="status==='idle'" (click)="start()">Iniciar</button>
+      @if (status==='idle') {
+        <button class="btn primary" (click)="start()">Iniciar</button>
+      }
 
-      <ng-container *ngIf="status!=='idle'">
+      @if (status!=='idle') {
         <button class="btn warn" (click)="pauseOrResume()">
           {{ status==='running' ? 'Pausar' : 'Retomar' }}
         </button>
         <button class="btn light" (click)="finish()">Terminar</button>
-      </ng-container>
+      }
     </div>
   </div>
 
@@ -53,17 +61,23 @@
       <div>Total pausas: <b>{{ fmtDuration(dailyPause) }}</b></div>
     </div>
 
-    <div *ngIf="loadingLogs" class="muted">A carregar registos…</div>
+    @if (loadingLogs) {
+      <div class="muted">A carregar registos…</div>
+    }
 
-    <div *ngIf="!loadingLogs && (!logs || logs.length===0)" class="muted">
-      Sem registos para este dia.
-    </div>
+    @if (!loadingLogs && (!logs || logs.length===0)) {
+      <div class="muted">
+        Sem registos para este dia.
+      </div>
+    }
 
-    <div *ngFor="let seg of logs" class="log-item" [class.drive]="seg.kind==='drive'" [class.pause]="seg.kind==='pause'">
-      <div class="kind">{{ seg.kind === 'drive' ? 'Condução' : 'Pausa' }}</div>
-      <div class="time">{{ seg.started_at }} → {{ seg.ended_at }}</div>
-      <div class="dur">{{ fmtDuration(seg.duration_seconds) }}</div>
-    </div>
+    @for (seg of logs; track seg) {
+      <div class="log-item" [class.drive]="seg.kind==='drive'" [class.pause]="seg.kind==='pause'">
+        <div class="kind">{{ seg.kind === 'drive' ? 'Condução' : 'Pausa' }}</div>
+        <div class="time">{{ seg.started_at }} → {{ seg.ended_at }}</div>
+        <div class="dur">{{ fmtDuration(seg.duration_seconds) }}</div>
+      </div>
+    }
   </div>
 
 </ion-content>

@@ -29,14 +29,12 @@ ion-content {
   font-size: 32px;
   margin: 8px 0;
   letter-spacing: -0.5px;
-  text-shadow: 0 8px 16px rgba(0, 0, 0, 0.45);
 }
 
 .hero .subtitle {
   font-size: 16px;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .eyebrow {
@@ -90,7 +88,6 @@ ion-content {
   margin-top: 18px;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.95);
-  text-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
 }
 
 .hero__badges ion-icon {
@@ -143,48 +140,6 @@ ion-content {
 
 .grid-section ion-col {
   padding: 8px;
-}
-
-.cards-scroll {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 4px 2px 8px;
-  scroll-snap-type: x mandatory;
-}
-
-.cards-scroll ion-card {
-  min-width: 260px;
-  scroll-snap-align: start;
-}
-
-.testimonial-card {
-  border-radius: 16px;
-  min-height: 220px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.testimonial-role {
-  color: #5a5a5a;
-  margin: 0;
-}
-
-.quote {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #1f1f1f;
-}
-
-.rating ion-icon {
-  color: #f2c94c;
-  font-size: 18px;
-  opacity: 0.7;
-}
-
-.rating ion-icon.filled {
-  opacity: 1;
 }
 
 .faq ion-accordion {

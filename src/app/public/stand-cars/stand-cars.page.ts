@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import {
   IonButton,
@@ -27,7 +27,6 @@ import { PublicHeaderComponent } from 'src/app/components/public-header/public-h
   styleUrls: ['./stand-cars.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     PublicHeaderComponent,
     IonContent,
     IonRefresher,
@@ -41,8 +40,8 @@ import { PublicHeaderComponent } from 'src/app/components/public-header/public-h
     IonCardContent,
     IonButton,
     IonIcon,
-    IonSkeletonText,
-  ]
+    IonSkeletonText
+]
 })
 export class StandCarsPage implements OnInit {
   cars: StandCar[] = [];

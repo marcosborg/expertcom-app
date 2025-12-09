@@ -1,4 +1,4 @@
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -16,7 +16,7 @@ import { chevronBackOutline, logInOutline, personCircleOutline } from 'ionicons/
 @Component({
   selector: 'app-public-header',
   standalone: true,
-  imports: [CommonModule, IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonImg],
+  imports: [IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonImg],
   templateUrl: './public-header.component.html',
   styleUrls: ['./public-header.component.scss'],
 })
