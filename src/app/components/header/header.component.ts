@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit {
           handler: () => {
             this.preferences.removeName('access_token').then(() => {
               setTimeout(() => {
-                this.router.navigateByUrl('/');
+                this.router.navigateByUrl('/home');
               }, 1000);
             });
           }

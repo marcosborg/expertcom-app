@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 
 // ⬇️ TIPOS / INTERFACES — FORA DA CLASSE
 export type FormInputType = 'text' | 'number' | 'date' | 'textarea' | 'checkbox' | 'radio' | 'photos';
@@ -45,7 +46,9 @@ export class ApiService {
     private http: HttpClient,
     private loadingController: LoadingController,
   ) {
-    this.baseUrl = this.sandbox ? 'http://127.0.0.1:8000/api/' : 'https://expertcom.pt/api/';
+    const fallback = this.sandbox ? 'http://127.0.0.1:8000/api/' : 'https://expertcom.pt/api/';
+    const base = environment.apiBaseUrl || fallback;
+    this.baseUrl = base.endsWith('/') ? base : `${base}/`;
   }
 
   private buildHeaders(extra: Record<string, string> = {}) {

@@ -1,0 +1,20 @@
+<ion-header class="public-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button *ngIf="showBack" fill="clear" size="small" (click)="goBack()">
+        <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <div class="branding" (click)="goHome()">
+      <ion-img src="assets/logo-header.png" alt="Expertcom logo"></ion-img>
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button fill="outline" color="light" size="small" (click)="openAuth()">
+        <ion-icon slot="start" [name]="isLoggedIn ? 'person-circle-outline' : 'log-in-outline'"></ion-icon>
+        {{ isLoggedIn ? 'Área reservada' : 'Login' }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

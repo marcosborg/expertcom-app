@@ -1,0 +1,29 @@
+<app-public-header [title]="title()" [showBack]="true"></app-public-header>
+
+<ion-content [fullscreen]="true" color="light">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="loading" class="skeleton">
+    <ion-skeleton-text animated style="width:70%; height:20px"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width:100%; height:14px; margin-top:10px"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width:90%; height:14px; margin-top:6px"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width:92%; height:14px; margin-top:6px"></ion-skeleton-text>
+  </div>
+
+  <div *ngIf="error && !loading" class="error-block">
+    <p>{{ error }}</p>
+    <ion-button size="small" fill="outline" (click)="load(true)">Tentar novamente</ion-button>
+    <ion-button size="small" fill="clear" (click)="backHome()">Voltar</ion-button>
+  </div>
+
+  <ion-card *ngIf="page && !loading">
+    <ion-card-header>
+      <ion-card-title>{{ title() }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="page-body" [innerHTML]="page.content || page.body"></div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

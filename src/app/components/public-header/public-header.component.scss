@@ -1,0 +1,22 @@
+.public-header {
+  ion-toolbar {
+    --background: #000;
+    --color: #fff;
+    border: none;
+  }
+
+  .branding {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+
+  ion-img {
+    width: 130px;
+    max-height: 44px;
+    object-fit: contain;
+  }
+}

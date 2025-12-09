@@ -61,8 +61,8 @@ export class LoginPage implements OnInit {
   ) { }
 
   data: any = {
-    email: 'kendallana406@gmail.com',
-    password: 'Uber@2025'
+    email: '',
+    password: ''
   }
 
   ngOnInit() {
@@ -78,20 +78,21 @@ export class LoginPage implements OnInit {
       loading.present();
       this.api.login(this.data).subscribe((resp: any) => {
         loading.dismiss();
-        this.preferences.setName('access_token', resp.access_token);
-        this.alertController.create({
-          message: 'Bem vindo',
-          backdropDismiss: false,
-          buttons: [
-            {
-              text: 'Continuar',
-              handler: () => {
-                this.router.navigateByUrl('tabs/tab1');
+        this.preferences.setName('access_token', resp.access_token).then(() => {
+          this.alertController.create({
+            message: 'Bem vindo',
+            backdropDismiss: false,
+            buttons: [
+              {
+                text: 'Continuar',
+                handler: () => {
+                  this.router.navigateByUrl('tabs/tab1');
+                }
               }
-            }
-          ]
-        }).then((alert) => {
-          alert.present();
+            ]
+          }).then((alert) => {
+            alert.present();
+          });
         });
       }, (err) => {
         console.log(err);

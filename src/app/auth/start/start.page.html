@@ -1,5 +1,110 @@
-<ion-content color="light" class="ion-padding">
-  <div class="center-content">
-    <ion-img src="../../../assets/logo.png" class="start-logo"></ion-img>
+<app-public-header [title]="'Expertcom'" [showBack]="false"></app-public-header>
+
+<ion-content [fullscreen]="true" color="light">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <section class="hero" [style.background-image]="heroImage() ? 'url(' + heroImage() + ')' : 'none'">
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <p class="eyebrow">Experiência premium em mobilidade</p>
+      <h1>{{ heroTitle() }}</h1>
+      <p class="subtitle">{{ heroSubtitle() }}</p>
+      <div class="hero__actions">
+        <ion-button color="dark" (click)="openAuth()">{{ isLoggedIn ? 'Área reservada' : 'Login' }}</ion-button>
+        <ion-button color="light" (click)="goToStandCars()">Stand de usados</ion-button>
+        <ion-button color="light" (click)="goToTransfers()">Transfers & Tours</ion-button>
+      </div>
+      <div class="hero__badges">
+        <ion-icon name="time-outline"></ion-icon>
+        <span>Disponível 24/7</span>
+        <ion-icon name="globe-outline"></ion-icon>
+        <span>Equipa multilingue</span>
+        <ion-icon name="star-outline"></ion-icon>
+        <span>Clientes corporativos e privados</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="content">
+    <ion-card class="about-card" *ngIf="homeData?.about; else aboutSkeleton">
+      <ion-card-header>
+        <ion-card-title>{{ homeData?.about?.title || homeData?.about?.name || 'Sobre a Expertcom' }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p [innerHTML]="homeData?.about?.description || homeData?.about?.body || homeData?.about?.content"></p>
+      </ion-card-content>
+    </ion-card>
+
+    <ng-template #aboutSkeleton>
+      <ion-card class="about-card">
+        <ion-card-header>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-skeleton-text animated style="width: 90%; height: 10px"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 70%; height: 10px"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 80%; height: 10px"></ion-skeleton-text>
+        </ion-card-content>
+      </ion-card>
+    </ng-template>
+
+    <section class="grid-section" *ngIf="homeData?.activities?.length">
+      <div class="section-title">
+        <h2>Atividades</h2>
+        <p>O que fazemos no dia a dia</p>
+      </div>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" sizeMd="6" *ngFor="let activity of homeData?.activities; trackBy: trackByIndex">
+            <ion-card class="info-card">
+              <ion-card-header>
+                <ion-card-title>{{ itemTitle(activity) }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <div [innerHTML]="itemDescription(activity)"></div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </section>
+
+    <section class="faq" *ngIf="faqQuestions().length">
+      <div class="section-title">
+        <h2>{{ faqTitle() }}</h2>
+        <p>Questões rápidas sobre serviços, stand e transfers</p>
+      </div>
+      <ion-accordion-group [multiple]="true">
+        <ion-accordion *ngFor="let faq of faqQuestions(); trackBy: trackByIndex">
+          <ion-item slot="header" color="light">
+            <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+            <ion-label>{{ faq.question || faq.title || 'FAQ' }}</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <p [innerHTML]="faq.answer || faq.content || ''"></p>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </section>
+
+    <section class="cms-menu" *ngIf="cmsMenu.length">
+      <div class="section-title">
+        <h2>Páginas</h2>
+        <p>Conteúdo institucional gerido em CMS</p>
+      </div>
+      <ion-list>
+        <ion-item button detail="true" *ngFor="let page of cmsMenu" (click)="openCmsPage(page.id)">
+          <ion-label>{{ page.label }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </section>
+
+    <div class="error-block" *ngIf="homeError && !loadingHome">
+      <p>{{ homeError }}</p>
+      <ion-button size="small" fill="outline" (click)="loadHome(true)">Tentar novamente</ion-button>
+    </div>
   </div>
 </ion-content>
+ent>

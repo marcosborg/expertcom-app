@@ -11,7 +11,26 @@
   <ion-content>
     <ion-list>
       <ion-menu-toggle auto-hide="true">
-        <ion-item routerLink="/tabs" routerDirection="root" detail="false">Início</ion-item>
+        <ion-item routerLink="/home" routerDirection="root" detail="false">Início público</ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle auto-hide="true">
+        <ion-item routerLink="/stand-cars" routerDirection="forward" detail="false">Stand de usados</ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle auto-hide="true">
+        <ion-item routerLink="/transfer-tours" routerDirection="forward" detail="false">Transfers & Tours</ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle auto-hide="true" *ngFor="let page of publicPagesMenu">
+        <ion-item [routerLink]="['/pages', page.id]" routerDirection="forward" detail="false">
+          {{ page.label }}
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle auto-hide="true">
+        <ion-item [routerLink]="isLoggedIn ? '/tabs/tab1' : '/login'" routerDirection="root" detail="false">
+          {{ isLoggedIn ? 'Área reservada' : 'Login' }}
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle auto-hide="true" *ngIf="isLoggedIn">
+        <ion-item routerLink="/tabs/tab1" routerDirection="root" detail="false">Painel</ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle auto-hide="true">
         <ion-item href="https://expertcom.pt" target="_blank" rel="noopener noreferrer" detail="false">Website</ion-item>

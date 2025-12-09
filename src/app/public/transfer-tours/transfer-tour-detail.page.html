@@ -1,0 +1,55 @@
+<app-public-header [title]="title()" [showBack]="true"></app-public-header>
+
+<ion-content [fullscreen]="true" color="light">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="loading" class="skeleton">
+    <ion-skeleton-text animated style="width:100%; height:220px"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width:70%; height:18px; margin-top:12px"></ion-skeleton-text>
+    <ion-skeleton-text animated style="width:90%; height:12px; margin-top:6px"></ion-skeleton-text>
+  </div>
+
+  <div *ngIf="error && !loading" class="error-block">
+    <p>{{ error }}</p>
+    <ion-button fill="outline" size="small" (click)="load(true)">Tentar novamente</ion-button>
+    <ion-button size="small" fill="clear" (click)="backToList()">Voltar</ion-button>
+  </div>
+
+  <ng-container *ngIf="tour && !loading">
+    <div class="gallery-scroll">
+      <div class="image" *ngFor="let img of images" [style.background-image]="'url(' + img + ')'"></div>
+    </div>
+
+    <div class="details">
+      <div class="title-row">
+        <h1>{{ title() }}</h1>
+        <ion-chip color="dark" *ngIf="tour.price">
+          <ion-label>{{ tour.price }}</ion-label>
+        </ion-chip>
+      </div>
+
+      <p class="meta">{{ subtitle() || 'Experiencia personalizada' }}</p>
+      <p class="description" [innerHTML]="tour.description || 'Descricao nao disponivel.'"></p>
+
+      <ion-list>
+        <ion-item *ngIf="tour.origin">
+          <ion-icon name="location-outline" slot="start"></ion-icon>
+          <ion-label>Origem/rota</ion-label>
+          <ion-label slot="end">{{ tour.origin }}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="tour.duration">
+          <ion-icon name="time-outline" slot="start"></ion-icon>
+          <ion-label>Duracao</ion-label>
+          <ion-label slot="end">{{ tour.duration }}</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-button expand="block" color="dark" (click)="backToList()">
+        Voltar aos transfers/tours
+        <ion-icon name="airplane-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+  </ng-container>
+</ion-content>

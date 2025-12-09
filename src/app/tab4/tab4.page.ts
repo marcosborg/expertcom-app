@@ -56,7 +56,7 @@ export class Tab4Page implements OnDestroy {
     this.preferences.checkName('access_token').then((resp: any) => {
       this.access_token = resp?.value ?? '';
       if (!this.access_token) {
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/home');
       } else {
         // carregar registo do dia atual
         this.loadDailyLogs();

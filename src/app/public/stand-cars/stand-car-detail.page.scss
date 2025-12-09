@@ -1,0 +1,66 @@
+.gallery-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 6px 6px 0 6px;
+  scroll-snap-type: x mandatory;
+}
+
+.image {
+  width: 100%;
+  max-width: 360px;
+  height: 220px;
+  border-radius: 14px;
+  background: #0f0f0f;
+  background-size: cover;
+  background-position: center;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.details {
+  padding: 16px;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.details h1 {
+  margin: 8px 0 4px;
+  font-size: 24px;
+}
+
+.meta {
+  margin: 0;
+  color: #5a5a5a;
+}
+
+.description {
+  margin-top: 12px;
+  line-height: 1.5;
+  color: #1f1f1f;
+}
+
+ion-list {
+  margin-top: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+ion-item {
+  --background: #fff;
+}
+
+.skeleton {
+  padding: 16px;
+}
+
+.error-block {
+  text-align: center;
+  color: #7a1a1a;
+  padding: 16px;
+}

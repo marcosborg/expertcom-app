@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiBaseUrl: 'https://expertcom.pt/api/',
+  publicApiBaseUrl: 'https://expertcom.pt/api/v1/public',
+  publicMenuPages: [] as Array<{ id: number; label: string }>,
 };
 
 /*

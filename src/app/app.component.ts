@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PreferencesService } from './services/preferences.service'; // Adjust the path as needed
+import { PreferencesService } from './services/preferences.service';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import {
@@ -15,6 +15,7 @@ import {
   IonItem,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -38,6 +39,7 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
 
   access_token: string | null = null;
+  publicPagesMenu = environment.publicMenuPages;
 
   constructor(
     private preferences: PreferencesService,
@@ -56,5 +58,9 @@ export class AppComponent {
     this.preferences.checkName('access_token').then((resp: any) => {
       this.access_token = resp.value;
     });
+  }
+
+  get isLoggedIn() {
+    return !!this.access_token;
   }
 }

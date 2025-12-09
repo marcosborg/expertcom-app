@@ -1,0 +1,56 @@
+<app-public-header [title]="'Stand Expertcom'" [showBack]="true"></app-public-header>
+
+<ion-content [fullscreen]="true" color="light">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <section class="list-header">
+    <p class="eyebrow">Seleção pronta a visitar</p>
+    <h1>Stand de usados</h1>
+    <p class="lead">Viaturas com histórico acompanhado pela nossa equipa técnica.</p>
+  </section>
+
+  <div *ngIf="loading" class="skeletons">
+    <ion-card *ngFor="let s of [1,2,3,4]">
+      <div class="thumb">
+        <ion-skeleton-text animated style="width:100%; height:160px"></ion-skeleton-text>
+      </div>
+      <ion-card-header>
+        <ion-skeleton-text animated style="width:60%; height:16px"></ion-skeleton-text>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-skeleton-text animated style="width:90%; height:12px"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width:70%; height:12px"></ion-skeleton-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="!loading && error" class="error-block">
+    <p>{{ error }}</p>
+    <ion-button size="small" fill="outline" (click)="loadCars(true)">Tentar novamente</ion-button>
+  </div>
+
+  <ion-grid *ngIf="!loading && !error">
+    <ion-row>
+      <ion-col size="12" sizeMd="6" *ngFor="let car of cars; trackBy: trackById">
+        <ion-card button="true" (click)="openDetail(car)">
+          <div class="thumb" [style.background-image]="'url(' + mainImage(car) + ')'">
+            <ion-icon name="car-outline"></ion-icon>
+          </div>
+          <ion-card-header>
+            <ion-card-title>{{ display(car.brand) || 'Viatura' }} {{ display(car.car_model) }}</ion-card-title>
+            <p class="meta">{{ meta(car) || 'Detalhes a pedido' }}</p>
+          </ion-card-header>
+          <ion-card-content>
+            <p>{{ car.description || 'Conheça a viatura e marque uma visita ao stand.' }}</p>
+            <div class="cta">
+              <span>Ver detalhes</span>
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

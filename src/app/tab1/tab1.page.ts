@@ -92,7 +92,7 @@ export class Tab1Page {
     this.preferences.checkName('access_token').then((resp: any) => {
       this.access_token = resp.value;
       if (!this.access_token) {
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/home');
       } else {
         this.loadingController.create().then((loading) => {
           loading.present();

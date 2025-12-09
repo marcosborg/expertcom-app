@@ -58,7 +58,7 @@ export class FormPagePage {
     const tok = await this.prefs.checkName('access_token');
     // <<< CORRIGIDO: garantir string
     this.access_token = tok?.value ?? '';
-    if (!this.access_token) { this.router.navigateByUrl('/'); return; }
+    if (!this.access_token) { this.router.navigateByUrl('/home'); return; }
 
     this.api.form(this.access_token, this.formId).subscribe({
       next: (res: any) => {
